@@ -1,9 +1,9 @@
 /**
  * @description       : 
- * @author            : Abhishek Walia
+ * @author            : VinayKumar
  * @group             : RafterOne
- * @last modified on  : 01-13-2023
- * @last modified by  : Abhishek
+ * @last modified on  : 18-01-2023
+ * @last modified by  : VinayKumar
 **/
 global with sharing class B2BStripeAdapter implements commercepayments.PaymentGatewayAdapter {
     private static final commercepayments.SalesforceResultCodeInfo RC_SUCCESS = toCodeInfo(commercepayments.SalesforceResultCode.Success);
