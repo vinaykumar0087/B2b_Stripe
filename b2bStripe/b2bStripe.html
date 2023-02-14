@@ -1,0 +1,62 @@
+<!--
+  @description       : 
+  @author            : Abhishek
+  @group             : RafterOne
+  @last modified on  : 01-13-2023
+  @last modified by  : Abhishek
+  Modifications Log
+  Ver   Date         Author     Modification
+  1.0   01-13-2023   Abhishek   Initial Version
+-->
+<template>
+    <template if:true={showSpinner}>
+          <div>
+              <lightning-spinner alternative-text="Loading..." variant="brand">
+              </lightning-spinner>
+          </div>
+    </template>
+    <div class="slds-m-top_large" if:true={canPay}>
+        <div class="slds-p-around_x-small slds-text-title_caps">
+            <h2>Payment Method</h2>
+        </div>
+        <template if:true={summaryData.ApprovedForCredit}>
+            <lightning-tabset active-tab-value={paymentType}>
+                <lightning-tab label="PO Number" value="PurchaseOrderNumber" onactive={handlePONumber}>
+					<template if:true={checkLimitButton}><lightning-button label="Mywallet" onclick={checkLimitHandler}></lightning-button> 
+					</template>
+					<template if:true={checkLimitData}><div class="addType"><lightning-formatted-text value="Wallet Limit: "></lightning-formatted-text><lightning-formatted-number value={summaryData.CreditLimit} format-style="currency" currency-code="USD" currency-display-as="symbol"></lightning-formatted-number></div>
+					</template>
+                    <lightning-input type="text" onchange={PONumberHandler} placeholder="Enter PO Number"></lightning-input>
+                </lightning-tab>
+                <lightning-tab label="Credit Card" value="CardPayment" onactive={handleCreditPayment}>
+                    
+                        <div  if:true={iframeUrl}>
+                            <iframe style="border: none;height: 50px;" width="100%" src={iframeUrl}></iframe>
+                        </div>
+                   
+                    
+                </lightning-tab>
+            </lightning-tabset>
+        </template>
+        <template if:false={summaryData.ApprovedForCredit}>
+            <div class="slds-p-around_x-small slds-text-title_caps">
+                <h2>Credit Card</h2>
+            </div>
+            <div  if:true={iframeUrl}>
+                <iframe style="border: none;height: 50px;" width="100%" src={iframeUrl}></iframe>
+            </div>
+        </template>
+        <div class="slds-m-top_small">
+            <div class="slds-clearfix">
+                <div class="slds-float_right">
+                    <p>
+                        <button class="slds-button slds-button--brand checkoutbtnClass slds-p-vertical_xx-small"
+                            onclick={submitOrder} type="button">
+                            <span class="whiteFont">Submit Order</span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
