@@ -1,15 +1,4 @@
-/**
- * @description       :
- * @author            : VinayKumar
- * @group             : RafterOne
- * @last modified on  : 18-01-2023
- * @last modified by  : VinayKumar
- * Modifications Log
- * Ver   Date         Author     Modification
- * 1.0   01-13-2023   Abhishek   Initial Version
-**/
 public with sharing class B2BPaymentController {
-
     @AuraEnabled
     public static map<String,Object> getPaymentInfo(map<String,Object> dataMap){
         String methodName = 'getPaymentInfo';
@@ -26,7 +15,7 @@ public with sharing class B2BPaymentController {
 
     @AuraEnabled(cacheable=true)
     public static string getVFOrigin() {
-        return 'https://training202104--mkrishna.sandbox.my.site.com';
+        return System.Label.Storefronturl;
     }
 
     @AuraEnabled
@@ -96,5 +85,4 @@ public with sharing class B2BPaymentController {
             }
         return dataMap;
     }
-
 }
