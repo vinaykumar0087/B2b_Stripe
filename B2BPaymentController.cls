@@ -75,7 +75,8 @@ public with sharing class B2BPaymentController {
     public static map<String,Object> updateOrderInformation(map<String,Object> dataMap){
         String cartId = (String)dataMap.get(B2BConstants.CART_ID) ;
         String paymentMethod = (String)dataMap.get('paymentMethod') ;
-        List<CartCheckoutSession> sessions = B2BStripeIntegrationController.getActiveCheckoutSessions(cartId);
+        try {
+            List<CartCheckoutSession> sessions = B2BStripeIntegrationController.getActiveCheckoutSessions(cartId);
             if(!sessions.isEmpty() && String.isNotBlank(sessions.get(0).OrderId)){
                 String orderId = sessions.get(0).OrderId;
                 Order o = new Order();
@@ -83,6 +84,12 @@ public with sharing class B2BPaymentController {
                 o.Stripe_Transaction_ID__c =  (String)dataMap.get('chargeId')   ;
                 update o;
             }
+        }
+        catch (Exception ex) {
+            dataMap = dataMap==null ? new Map<String,Object>() : dataMap ;
+            dataMap.put(B2BConstants.IS_SUCCESS,false);
+            dataMap.put(B2BConstants.MESSAGE,ex.getMessage());
+        }
         return dataMap;
     }
 }
